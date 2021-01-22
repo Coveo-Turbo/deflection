@@ -56,6 +56,9 @@ export class Deflection extends Component {
     constructor(public element: HTMLElement, public options: IDeflectionOptions, public bindings: IComponentBindings) {
         super(element, Deflection.ID, bindings);
         this.options = ComponentOptions.initComponentOptions(element, Deflection, options);
+
+        this.bindEvents();
+        this.forceFetchVisitId();
     }
 
     private forceFetchVisitId(): Promise<string> {
@@ -261,7 +264,7 @@ export class Deflection extends Component {
 
     private startNewSearchTimeout(args: IDeflectionFieldChangeEventArgs) {
         this.cancelAnyPendingSearchTimeout();
-        this.searchTimeout = setTimeout(() => {
+        this.searchTimeout = window.setTimeout(() => {
             this.queryController.deferExecuteQuery({
                 beforeExecuteQuery: () => {
                     if (args.field.options.enableAnalytic) {
