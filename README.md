@@ -15,7 +15,7 @@ npm i @coveops/deflection
 Typescript:
 
 ```javascript
-import { Deflection, IDeflectionOptions } from '@coveops/deflection';
+import { DeflectionInterface, IDeflectionInterfaceOptions, Deflection, IDeflectionOptions, DeflectionField, IFieldDeflectionOptions, Submit, ISubmitOptions, Cancel, ICancelOptions, DeflectionEvents } from '@coveops/deflection';
 ```
 
 Javascript
@@ -38,13 +38,47 @@ export * from '@coveops/deflection'
 
 > Disclaimer: Unpkg should be used for testing but not for production.
 
-5. Include the component in your template as follows:
+5. Include the components in your template as follows:
 
-Place the component in your markup:
+Instead of using the standard CoveoSearchInterface component, we use the CoveoDeflectionInterface component.
+On the left side of the screen, we create a contact form that allows users to input mandatory information to open a support case.
+The contact form is created using CoveoDeflection, CoveoDeflectionField, CoveoDeflectionSubmit and CoveoDeflectionCancel components.
+By configuring caseField option on the CoveoDeflectionField component, we are sending the input value in the query context so we can override `q` and `lq` in the query pipeline. This is following the same documented approach to build a Self-Service Case Deflection using Coveo for Salesforce or Coveo for ServiceNow.
 
 ```html
-<div class="CoveoDeflection"></div>
+    <div id="coveo-self-service-case-deflection-interface" class="CoveoDeflectionInterface" data-enable-history="false" data-auto-trigger-query="true" style="border: 1px solid #ccc; padding-bottom: 10px;">
+        <div class="CoveoAnalytics"></div>
+        <div class="coveo-case-creation-column">
+            <div class="CoveoDeflection">
+                <h4>How Can We Help You?</h4>
+
+                <div class="field CoveoDeflectionField" data-case-field="InputProduct">
+                    <textarea rows="2" placeholder="Product"></textarea>
+                </div>
+                <div class="field CoveoDeflectionField" data-case-field="InputSubject">
+                    <textarea rows="2" placeholder="Subject"></textarea>
+                </div>
+                <div class="field CoveoDeflectionField" data-case-field="InputDescription">
+                    <textarea rows="8" placeholder="Description"></textarea>
+                </div>
+                <button class="ui button CoveoDeflectionSubmit" type="submit">Submit</button>
+                <button class="ui button CoveoDeflectionCancel" type="submit">Cancel</button>
+            </div>
+        </div>
+        <div class="coveo-results-column results-with-actions">
+            <!--  Add needed Coveo JS UI components -->
+            <div class="CoveoResultList" data-layout="list" data-wait-animation="fade" data-auto-select-fields-to-include="true">
+                <!--  Add needed Coveo JS UI results templates -->
+            </div>
+        </div>
+    </div>
 ```
+
+6. Self-Service Case Deflection - Query Pipeline configuration:
+
+    To learn more about the query pipeline configuration, refer to the online documentation for both Coveo for Salesforce and Coveo for ServiceNow:
+    - https://docs.coveo.com/en/2111/coveo-for-servicenow/configure-the-coveo-case-deflection-panel
+    - https://docs.coveo.com/en/1163/coveo-for-salesforce/integrating-a-coveo-case-deflection-component
 
 ## Extending
 
