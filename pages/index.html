@@ -25,48 +25,39 @@
                     searchHub: demoConfig.searchHub,
                 }
             });
-    
-            const standaloneSearchBoxRoot = document.querySelector('.CoveoSearchInterface');
-        
-            Coveo.initSearchbox(standaloneSearchBoxRoot, demoConfig.searchUrl, {
-                Analytics: {
-                    searchHub: demoConfig.searchHub,
-                },
-            });
         })
     </script>
 </head>
 <body>
-    <div id="search" class="CoveoSearchInterface" data-enable-history="false" data-auto-trigger-query="true" style="border: 1px solid #ccc; padding-bottom: 10px;">
+    <div id="search" class="CoveoDeflectionInterface" data-enable-history="false" data-auto-trigger-query="true" style="border: 1px solid #ccc; padding-bottom: 10px;">
         <div class="CoveoAnalytics"></div>
-        <div class="coveo-tab-section" style="padding: 10px 10px 0 10px; text-align: left;">
-            <div class="coveo-searchbox-section" style="float:left; width:50%; margin-right: 20px">
-                <div class="CoveoSearchbox" data-inline="false"></div>
-            </div>
-            <a class="CoveoTab" data-id="All" data-caption="All Content" data-expression="" style="height: 60px"></a>
-            <a class="CoveoTab" data-id="ServiceCatalog" data-caption="Service Catalog" data-expression="@filetype=sccatitem" style="height: 60px"></a>
-            <a class="CoveoTab" data-id="Knowledge" data-caption="Knowledge" data-expression="@filetype=kbknowledge" style="height: 60px"></a>
-        </div>
         <div style="clear:both;"></div>
-        <div class="coveo-facet-column" style="margin-right: 0;">
-            <div class="CoveoResultsFilter" data-text="Show Only Attached Results" data-field="urihash"></div>
-            <div class="CoveoDynamicFacet" data-title="Type" data-field="@filetype" data-number-of-values="3"></div>
-            <div class="CoveoSimpleFilter" data-title="Author" data-field="@author"></div>
-            <div class="CoveoSimpleFilter" data-title="Year" data-field="@year"></div>
-            <div class="CoveoSimpleFilter" data-title="Month" data-field="@month"></div>
+        <div class="coveo-case-creation-column">
+            <div class="CoveoDeflection">
+              <h4>How Can We Help You?</h4>
+      
+              <div class="field CoveoDeflectionField" data-case-field="InputProduct">
+                <!-- <label>Product</label> -->
+                <textarea rows="2" placeholder="Product"></textarea>
+              </div>
+              <div class="field CoveoDeflectionField" data-case-field="InputSubject">
+                <!-- <label>Subject</label> -->
+                <textarea rows="2" placeholder="Subject"></textarea>
+              </div>
+              <div class="field CoveoDeflectionField" data-case-field="InputDescription">
+                <!-- <label>Description</label> -->
+                <textarea rows="8" placeholder="Description"></textarea>
+              </div>
+              <button class="ui button CoveoDeflectionSubmit" type="submit">Submit</button>
+              <button class="ui button CoveoDeflectionCancel" type="submit">Cancel</button>
+            </div>
         </div>
         <div class="coveo-results-column results-with-actions">
             <div class="CoveoShareQuery"></div>
-            <div class="CoveoPreferencesPanel">
-                <div class="CoveoResultsPreferences"></div>
-                <div class="CoveoResultsFiltersPreferences"></div>
-            </div>
             <div class="CoveoTriggers"></div>
-            <div class="CoveoBreadcrumb"></div>
             <div class="coveo-results-header">
                 <div class="coveo-summary-section">
-                    <span class="CoveoQuerySummary"></span>&#160;
-                    <span class="CoveoQueryDuration"></span>
+                    <span class="CoveoQuerySummary"></span>
                 </div>
                 <div class="coveo-result-layout-section">
                     <span class="CoveoResultLayout"></span>

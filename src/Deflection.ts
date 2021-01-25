@@ -24,6 +24,7 @@ export interface IDeflectionOptions {
     openLinkInNewWindow: boolean;
     useDefaultRule: boolean;
     sendCaseDataToAnalytic: boolean;
+    useLongQuery: boolean;
 }
 
 export interface IAnalyticsCaseDeflectionInputChangeMeta extends Coveo.IAnalyticsCaseCreationInputChangeMeta {
@@ -43,7 +44,8 @@ export class Deflection extends Component {
         searchType: Coveo.ComponentOptions.buildStringOption({ defaultValue: '' }),
         openLinkInNewWindow: Coveo.ComponentOptions.buildBooleanOption({ defaultValue: true }),
         useDefaultRule: Coveo.ComponentOptions.buildBooleanOption({ defaultValue: true }),
-        sendCaseDataToAnalytic: Coveo.ComponentOptions.buildBooleanOption({ defaultValue: true })
+        sendCaseDataToAnalytic: Coveo.ComponentOptions.buildBooleanOption({ defaultValue: true }),
+        useLongQuery: Coveo.ComponentOptions.buildBooleanOption({ defaultValue: false })
     };
 
     private fields: DeflectionField[] = [];
@@ -56,6 +58,9 @@ export class Deflection extends Component {
     constructor(public element: HTMLElement, public options: IDeflectionOptions, public bindings: IComponentBindings) {
         super(element, Deflection.ID, bindings);
         this.options = ComponentOptions.initComponentOptions(element, Deflection, options);
+
+        this.bindEvents();
+        this.forceFetchVisitId();
     }
 
     private forceFetchVisitId(): Promise<string> {
@@ -153,7 +158,7 @@ export class Deflection extends Component {
     private handleBuildingQuery(args: Coveo.IBuildingQueryEventArgs) {
         if (this.options.useSomeQRE) {
             this.addSomeOnAllKeywordsExtension(args.queryBuilder);
-        } else {
+        } else if (this.options.useLongQuery) {
             this.addAllKeywordsForMLRefinedQuery(args.queryBuilder);
         }
 
@@ -261,7 +266,7 @@ export class Deflection extends Component {
 
     private startNewSearchTimeout(args: IDeflectionFieldChangeEventArgs) {
         this.cancelAnyPendingSearchTimeout();
-        this.searchTimeout = setTimeout(() => {
+        this.searchTimeout = window.setTimeout(() => {
             this.queryController.deferExecuteQuery({
                 beforeExecuteQuery: () => {
                     if (args.field.options.enableAnalytic) {
